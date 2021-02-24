@@ -24,3 +24,4 @@ Route::get('/pranks',[PrankScriptsController::class,'getPranks'])->name('allPran
 
 Route::get('/category',[AppCategoriesController::class,'getAllCategories'])->name('allCategories');
 Route::get('/category/{slug}',[AppCategoriesController::class,'getBySlug'])->name('bySlug');
+Route::get('/category/{slug}',[AppCategoriesController::class,'getBySlug'])->name('bySlug');
