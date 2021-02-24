@@ -15,39 +15,39 @@
         <v-card-text>
         <v-row class="pl-4">
             <v-col cols="6" class="d-flex align-center pa-0 justify-start ">
-            <v-icon
-                medium
-                color="orange darken-2"
-            >
-                mdi-phone
-            </v-icon>
-            <p class="pt-2 pl-3">{{data.our_sent}}</p>
+                <v-icon
+                    medium
+                    color="orange darken-2"
+                >
+                    mdi-phone
+                </v-icon>
+                <p class="pt-2 pl-3">{{data.our_sent}}</p>
             </v-col>
             <v-col cols="6" class="d-flex align-center pa-0 justify-start ">
-            <v-icon
-                medium
-                color="orange darken-2"
-            >
-                mdi-thumb-up-outline
-            </v-icon>
-            <p class="pt-2 pl-3">{{data.our_likes}}</p>
+                <v-icon
+                    medium
+                    color="orange darken-2"
+                >
+                    mdi-thumb-up-outline
+                </v-icon>
+                <p class="pt-2 pl-3">{{data.our_likes}}</p>
             </v-col>
             <v-col cols="6" class="d-flex align-center pa-0 justify-start ">
-            <v-icon
-                medium
-                color="orange darken-2"
-            >
-                mdi-star
-            </v-icon>
-            <p class="pt-2 pl-3">{{data.likes}}</p>
+                <v-icon
+                    medium
+                    color="orange darken-2"
+                >
+                    mdi-star
+                </v-icon>
+                <p class="pt-2 pl-3">{{data.likes}}</p>
             </v-col>
             <v-col cols="6" class="d-flex align-center pa-0 justify-start ">
-            <v-icon
-                medium
-                color="orange darken-2"
-            >
-                mdi-forum
-            </v-icon>
+                <v-icon
+                    medium
+                    color="orange darken-2"
+                >
+                    mdi-forum
+                </v-icon>
             
             </v-col>
         </v-row>

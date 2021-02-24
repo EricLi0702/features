@@ -48,39 +48,30 @@
           scrollable
           @click:outside="closeDialog"
         >
-          <!-- <v-row class="bg-white">
-            <v-col cols="12" class="text-center">
-              
-            </v-col>
-            <v-col cols="12" >
-
-            </v-col>
-          </v-row> -->
-      <v-card>
-        <v-card-title>
-          <h2 class="text-primary ma-3 ">Prank Data</h2>
-        </v-card-title>
-        <v-divider></v-divider>
-        <v-card-text style="height: 700px;">
-          <v-row>
-            <v-col cols="4" v-for="(data, i) in resData" :key="i">
-              <Category v-if="isGettingAllPrank" :data="data"/>
-              <Card v-else :data="data"/>
-            </v-col>
-          </v-row>
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions class="pa-5 d-flex justify-center">
-          <v-pagination
-            v-model="paginationData.current_page"
-            :length="paginationData.total_pages"
-            total-visible="9"
-            @input="callSpecPage"
-          ></v-pagination>
-        </v-card-actions>
-      </v-card>
+          <v-card>
+            <v-card-title>
+              <h2 class="text-primary ma-3 ">Prank Data</h2>
+            </v-card-title>
+            <v-divider></v-divider>
+            <v-card-text style="height: 700px;">
+              <v-row>
+                <v-col cols="4" v-for="(data, i) in resData" :key="i">
+                  <Category v-if="isGettingAllPrank" :data="data"/>
+                  <Card v-else :data="data"/>
+                </v-col>
+              </v-row>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions class="pa-5 d-flex justify-center">
+              <v-pagination
+                v-model="paginationData.current_page"
+                :length="paginationData.total_pages"
+                total-visible="9"
+                @input="callSpecPage"
+              ></v-pagination>
+            </v-card-actions>
+          </v-card>
         </v-dialog>
-      
       </v-col>
     </v-row>
   </v-container>
@@ -94,7 +85,7 @@
 
   
   export default {
-    name: 'HelloWorld',
+    name: 'Feature',
     components: {
       Card,
       Category
@@ -169,9 +160,11 @@
       closeDialog(){
         this.$router.push('/')
       },
+
       callSpecPage(val){
         this.getData(this.getCurrentIndex,val)
       },
+      
     }
   }
 </script>
