@@ -1,0 +1,52 @@
+.hover-btn:hover{
+    background: #ffa500!important;
+    border-color: #ffa500!important;
+    transition: background 0.5s ease;
+}
+
+.hover-btn{
+    background: #2fdbd9!important;
+    border-color: #2fdbd9!important;
+}
+
+.bg-white{
+    background: white;
+}
+
+.text-primary{
+    color: #2fdbd9;
+}
+
+.text-white{
+    color: white;
+}
+
+.modal-con{
+    width: 1000px!important;
+    height: 1000px!important;
+}
+
+.category-con{
+    background: linear-gradient(#2fdbd9, #169997);
+    display: block;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 0px ;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.category-img{
+    width: 48px;
+    height: 48px;
+}
+
+.card-title{
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.send-prank-btn span.v-btn__content{
+    color: white;
+}

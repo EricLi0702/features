@@ -2,150 +2,176 @@
   <v-container>
     <v-row class="text-center">
       <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
+        <h1 class="mt-10">Prank Call Your Friends <br> With The Ownage PrankDial App!</h1>
       </v-col>
-
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community</a>
-        </p>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          What's next?
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
+      <v-col >
+      <v-col cols="12" class="mt-10">
+        <v-row class="d-flex justify-center align-center">
+          <v-btn
+            rounded
+            color="#2fdbd9"
+            dark
+            x-large
+            class="ma-5 hover-btn"
+            @click="getPrankData('view-all-pranks')"
+            :loading="params[0].loading"
           >
-            {{ next.text }}
-          </a>
+            View All Pranks
+          </v-btn>
+          <v-btn
+            rounded
+            color="#2fdbd9"
+            dark
+            x-large
+            class="ma-5 hover-btn"
+            @click="getPrankData('new-prank-calls')"
+            :loading="params[1].loading"
+          >
+            New Pranks
+          </v-btn>
+          <v-btn
+            rounded
+            color="#2fdbd9"
+            dark
+            x-large
+            class="ma-5 hover-btn"
+            @click="getPrankData('food-restaurant-prank-calls')"
+            :loading="params[2].loading"
+          >
+            Food and Restaurants
+          </v-btn>
         </v-row>
       </v-col>
+        <v-dialog
+          v-model="isOpenDialog"
+          width="1000"
+          scrollable
+          @click:outside="closeDialog"
+        >
+          <!-- <v-row class="bg-white">
+            <v-col cols="12" class="text-center">
+              
+            </v-col>
+            <v-col cols="12" >
 
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Important Links
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-row>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Ecosystem
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-row>
+            </v-col>
+          </v-row> -->
+      <v-card>
+        <v-card-title>
+          <h2 class="text-primary ma-3 ">Prank Data</h2>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 700px;">
+          <v-row>
+            <v-col cols="4" v-for="(data, i) in resData" :key="i">
+              <Category v-if="isGettingAllPrank" :data="data"/>
+              <Card v-else :data="data"/>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="pa-5 d-flex justify-center">
+          <v-pagination
+            v-model="paginationData.current_page"
+            :length="paginationData.total_pages"
+            total-visible="9"
+            @input="callSpecPage"
+          ></v-pagination>
+        </v-card-actions>
+      </v-card>
+        </v-dialog>
+      
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+  import axios from 'axios';
+  import Card from './cardComponent';
+  import Category from './categoryComponent';
+  import {mapGetters,mapActions} from 'vuex';
+
+  
   export default {
     name: 'HelloWorld',
-
+    components: {
+      Card,
+      Category
+    },
     data: () => ({
-      ecosystem: [
+      params:[
         {
-          text: 'vuetify-loader',
-          href: 'https://github.com/vuetifyjs/vuetify-loader',
+          url:"https://t0u4i52ro7.execute-api.us-east-1.amazonaws.com/api/v1/category?limit=5&page=",
+          loading:false,
+          type:"view-all-pranks"
         },
         {
-          text: 'github',
-          href: 'https://github.com/vuetifyjs/vuetify',
+          url:"https://t0u4i52ro7.execute-api.us-east-1.amazonaws.com/api/v1/prank-idea?limit=3&page=",
+          loading:false,
+          type:"new-prank-calls"
         },
         {
-          text: 'awesome-vuetify',
-          href: 'https://github.com/vuetifyjs/awesome-vuetify',
-        },
+          url:"https://t0u4i52ro7.execute-api.us-east-1.amazonaws.com/api/v1/prank-idea/view-all-pranks?limit=10&page=",
+          loading:false,
+          type:"food-restaurant-prank-calls"
+        }
       ],
-      importantLinks: [
-        {
-          text: 'Documentation',
-          href: 'https://vuetifyjs.com',
-        },
-        {
-          text: 'Chat',
-          href: 'https://community.vuetifyjs.com',
-        },
-        {
-          text: 'Made with Vuetify',
-          href: 'https://madewithvuejs.com/vuetify',
-        },
-        {
-          text: 'Twitter',
-          href: 'https://twitter.com/vuetifyjs',
-        },
-        {
-          text: 'Articles',
-          href: 'https://medium.com/vuetify',
-        },
-      ],
-      whatsNext: [
-        {
-          text: 'Explore components',
-          href: 'https://vuetifyjs.com/components/api-explorer',
-        },
-        {
-          text: 'Select a layout',
-          href: 'https://vuetifyjs.com/getting-started/pre-made-layouts',
-        },
-        {
-          text: 'Frequently Asked Questions',
-          href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-        },
-      ],
+      resData : [],
+      isOpenDialog : false,
+      isGettingAllPrank : false,
+      paginationData : {
+        total_pages:0,
+        current_page:0,
+      },
+      
     }),
+    computed:{
+      currentPath(){
+        return this.$route
+      },
+      ...mapGetters([
+        'getCurrentIndex'
+      ])
+    },
+    methods: {
+
+      ...mapActions([
+        'changeCurrentIndex', 
+      ]),
+
+      getPrankData(type){
+        let index = this.params.findIndex(param=>param.type == type)
+        this.$router.push(`${this.currentPath.path}/${this.params[index].type}`)
+        this.getData(index)
+      },
+      
+      async getData(index,page=1){
+        this.params[index].loading = true;
+        this.changeCurrentIndex(index)
+        axios.get(`${this.params[index].url}${page}`)
+              .then(res=>{
+                this.params[index].loading = false
+                this.isOpenDialog = true;
+                this.resData = res.data.data;
+                if(this.params[index].type == 'view-all-pranks'){
+                  this.isGettingAllPrank = true;
+                }else{
+                  this.isGettingAllPrank = false;
+                }
+                this.paginationData = res.data.pagination;
+              })
+              .catch(err=>{
+                console.log(err)
+              });
+      },
+
+      closeDialog(){
+        this.$router.push('/')
+      },
+      callSpecPage(val){
+        this.getData(this.getCurrentIndex,val)
+      },
+    }
   }
 </script>

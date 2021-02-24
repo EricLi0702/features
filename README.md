@@ -1,4 +1,4 @@
-# hello-world
+# feature
 
 ## Project setup
 ```
